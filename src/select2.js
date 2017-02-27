@@ -100,9 +100,14 @@ angular.module('ui.select2', []).value('uiSelect2Config', {}).directive('uiSelec
                   return !value || value.length === 0;
                 };
                 var viewValue = controller.$viewValue;
-                if (angular.isString(viewValue)) {
-                  viewValue = viewValue.split(',');
-                }
+
+                // Removed default splitting of string values by comma, this can be done
+                // manually with the tokenSeparators select2.js option - ns
+                //
+                // if (angular.isString(viewValue)) {
+                //   viewValue = viewValue.split(',');
+                // }
+
                 elm.select2(
                   'data', convertToSelect2Model(viewValue));
                 if (opts.sortable) {
@@ -116,7 +121,7 @@ angular.module('ui.select2', []).value('uiSelect2Config', {}).directive('uiSelec
                       elm.trigger('change');
                     }
                   });
-                }                  
+                }
               } else {
                 if (angular.isObject(controller.$viewValue)) {
                   elm.select2('data', controller.$viewValue);
@@ -164,7 +169,7 @@ angular.module('ui.select2', []).value('uiSelect2Config', {}).directive('uiSelec
             // Set the view and model value and update the angular template manually for the ajax/multiple select2.
             elm.bind("change", function (e) {
               e.stopImmediatePropagation();
-              
+
               if (scope.$$phase || scope.$root.$$phase) {
                 return;
               }
