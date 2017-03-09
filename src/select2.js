@@ -101,12 +101,11 @@ angular.module('ui.select2', []).value('uiSelect2Config', {}).directive('uiSelec
                 };
                 var viewValue = controller.$viewValue;
 
-                // Removed default splitting of string values by comma, this can be done
-                // manually with the tokenSeparators select2.js option - ns
-                //
-                // if (angular.isString(viewValue)) {
-                //   viewValue = viewValue.split(',');
-                // }
+                // add option to switch the separator in case a user wants
+                // to use commas in their tags
+                if (angular.isString(viewValue)) {
+                    viewValue = viewValue.split( opts.separator || ',' );
+                }
 
                 elm.select2(
                   'data', convertToSelect2Model(viewValue));
